@@ -64,7 +64,7 @@ public class BDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String query = "select * from mvc_board order by broup decs, bstep asc";//id 순으로 내림차순 정렬
+		String query = "select * from mvc_board order by bgroup desc, bstep asc";//id순으로 내림차순 정렬
 		
 		try {
 			conn = datasource.getConnection();
@@ -98,10 +98,8 @@ public class BDao {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		
-		return dtos;
-		
+		}		
+		return dtos;		
 	}
 	
 }

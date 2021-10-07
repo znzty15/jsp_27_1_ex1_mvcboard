@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.javaGG.ex.*" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>write_view.jsp</title>
+<title>게시판 글쓰기</title>
 </head>
 <body>
-	<h3>자유게시판</h3>
+	<h1>자유게시판</h1>
 	<table width="500" cellpadding="0" cellspacing="0" border="1">
 		<form action="write.do" method="post">
 			<tr>
@@ -21,13 +20,12 @@
 			</tr>
 			<tr>
 				<td>내용</td>
-				<td><textarea name="bcontent" rows="10" cols=50></textarea></td>
+				<td><textarea name="bcontent" rows="10" cols="46"></textarea></td>
 			</tr>
 			<tr>
-				<td><input type="submit" value="입력"></td>
-				<td><a href="list.do">글 리스트보기</a></td>
-			</tr>			
-		</form>
+				<td colspan="2"><input type="submit" value="입력">&nbsp;&nbsp;&nbsp;&nbsp;<a href="list.do">글 리스트 보기</a></td>
+			</tr>		
+		</form>	
 	</table>
 </body>
 </html>

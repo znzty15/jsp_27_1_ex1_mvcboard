@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javaGG.ex.command.BCommand;
+import com.javaGG.ex.command.BListCommand;
 import com.javaGG.ex.command.BWriteCommand;
 
 /**
@@ -58,16 +59,18 @@ public class BFrontController extends HttpServlet {
 		String com = uri1.substring(conPath.length());
 		
 		if(com.equals("/write_view.do")) {
-			viewPage = "write_view.jsp";
+			viewPage = "write_view.jsp";//글 쓰기 페이지
 		} else if(com.equals("/write.do")) {
 			command = new BWriteCommand();
 			command.excute(request, response);
-//			viewPage = "list.do";
+			viewPage = "list.do";
 		} else if(com.equals("/list.do")) {
-			System.out.println("update command 호출");
+			command = new BListCommand();
+			command.excute(request, response);
+			viewPage = "list.jsp";//글 쓴거 보여주기
 		}
-//		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-//		dispatcher.forward(request, response);
+		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+		dispatcher.forward(request, response);
 	}
 
 }
