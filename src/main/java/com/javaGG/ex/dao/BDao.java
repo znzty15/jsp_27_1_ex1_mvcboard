@@ -1,11 +1,10 @@
 package com.javaGG.ex.dao;
 
-import java.security.Timestamp;
-import java.sql.Timestamp;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import javax.naming.Context;
@@ -61,7 +60,7 @@ public class BDao {
 		
 		ArrayList<BDto> dtos = new ArrayList<BDto>();
 		
-		BDto dto = new BDto();
+//		BDto dto = new BDto();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -83,8 +82,10 @@ public class BDao {
 				int bstep = rs.getInt("bstep");
 				int bindent = rs.getInt("bindent");
 				
-				BDto dto = new BDto (bid, bname, btitle, bcontent, bdate, bhit, bgroup, bstep, bindent);
-				dtos.add(dto);
+				BDto dto = new BDto(bid, bname, btitle, bcontent, bdate, bhit, bgroup, bstep, bindent);
+	            dtos.add(dto);
+			}
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

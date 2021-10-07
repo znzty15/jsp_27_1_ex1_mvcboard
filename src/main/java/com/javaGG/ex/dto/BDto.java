@@ -1,6 +1,6 @@
 package com.javaGG.ex.dto;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 public class BDto {	
 	int bid;
