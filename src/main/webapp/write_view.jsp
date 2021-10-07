@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.javaGG.ex.*" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>list.jsp</title>
+<title>write_view.jsp</title>
 </head>
 <body>
 	<table width="500" cellpadding="0" cellspacing="0" border="1">
@@ -25,6 +26,5 @@
 		</tr>
 		</c:forEach>
 	</table>
-
 </body>
 </html>
