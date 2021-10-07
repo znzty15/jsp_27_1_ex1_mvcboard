@@ -1,12 +1,18 @@
 package com.javaGG.ex.dao;
 
+import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import com.javaGG.ex.dto.BDto;
 
 public class BDao {
 	
@@ -50,4 +56,51 @@ public class BDao {
 			}
 		}
 	}
+	
+	public ArrayList<BDto> list() {
+		
+		ArrayList<BDto> dtos = new ArrayList<BDto>();
+		
+		BDto dto = new BDto();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "select * from mvc_board order by broup decs, bstep asc";//id 순으로 내림차순 정렬
+		
+		try {
+			conn = datasource.getConnection();
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int bid = rs.getInt("bid");
+				String bname = rs.getString("bname");
+				String btitle = rs.getString("btitle");
+				String bcontent = rs.getString("bcontent");
+				Timestamp bdate = rs.getTimestamp("bdate");
+				int bhit = rs.getInt("bhit");
+				int bgroup = rs.getInt("bgroup");
+				int bstep = rs.getInt("bstep");
+				int bindent = rs.getInt("bindent");
+				
+				BDto dto = new BDto (bid, bname, btitle, bcontent, bdate, bhit, bgroup, bstep, bindent);
+				dtos.add(dto);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return dtos;
+		
+	}
+	
 }
