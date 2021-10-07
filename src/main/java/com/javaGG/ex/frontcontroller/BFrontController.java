@@ -62,10 +62,12 @@ public class BFrontController extends HttpServlet {
 		} else if(com.equals("/write.do")) {
 			command = new BWriteCommand();
 			command.excute(request, response);
-			viewPage = "list.do";
-		}		
-		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-		dispatcher.forward(request, response);
+//			viewPage = "list.do";
+		} else if(com.equals("/list.do")) {
+			System.out.println("update command 호출");
+		}
+//		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+//		dispatcher.forward(request, response);
 	}
 
 }

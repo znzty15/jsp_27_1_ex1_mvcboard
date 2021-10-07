@@ -16,7 +16,7 @@ public class BDao {
 		// TODO Auto-generated constructor stub
 		try {
 			Context context = new InitialContext();
-			datasource = (DataSource)context.lookup("java:comp/evn/jbdc/Oracle11g");
+			datasource = (DataSource)context.lookup("java:comp/env/jdbc/Oracle11g");
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -27,8 +27,8 @@ public class BDao {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String query = "insert into mvc_board(bid, bname, btitle, bcontent, bhit, bgroup, bstep, bindent"
-				+ "values(mvc_board_seq.nextval, ?, ?, ?, 0, mvc_board_seq_currval, 0, 0)";
+		String query = "insert into mvc_board (bid, bname, btitle, bcontent, bhit, bgroup, bstep, bindent)"
+				+ "values (mvc_board_seq.nextval, ?, ?, ?, 0, mvc_board_seq.currval, 0, 0 )";
 		
 		try {
 			conn = datasource.getConnection();
