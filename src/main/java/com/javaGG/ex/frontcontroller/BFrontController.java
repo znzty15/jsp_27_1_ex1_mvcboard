@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javaGG.ex.command.BCommand;
+import com.javaGG.ex.command.BContentCommand;
 import com.javaGG.ex.command.BListCommand;
 import com.javaGG.ex.command.BWriteCommand;
 
@@ -54,9 +55,9 @@ public class BFrontController extends HttpServlet {
 		String viewPage = null;
 		BCommand command = null;
 		
-		String uri1 = request.getRequestURI();
+		String ur1 = request.getRequestURI();
 		String conPath = request.getContextPath();
-		String com = uri1.substring(conPath.length());
+		String com = ur1.substring(conPath.length());
 		
 		if(com.equals("/write_view.do")) {
 			viewPage = "write_view.jsp";//글 쓰기 페이지
@@ -68,7 +69,11 @@ public class BFrontController extends HttpServlet {
 			command = new BListCommand();
 			command.excute(request, response);
 			viewPage = "list.jsp";//글 쓴거 보여주기
-		}
+		}else if(com.equals("/content_view.do")) {
+	         command = new BContentCommand();
+	         command.excute(request, response);
+	         viewPage = "content_view.jsp";//글 수정창 들어가기
+	      }
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}

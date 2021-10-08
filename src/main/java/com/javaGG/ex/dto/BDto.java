@@ -13,11 +13,6 @@ public class BDto {
 	int bstep;
 	int bindent;
 	
-	public BDto() {
-		// TODO Auto-generated constructor stub
-		
-	}
-	
 	public BDto(int bid, String bname, String btitle, String bcontent, Timestamp bdate, int bhit, int bgroup, int bstep, int bindent) {
 		// TODO Auto-generated constructor stub
 		this.bid = bid;

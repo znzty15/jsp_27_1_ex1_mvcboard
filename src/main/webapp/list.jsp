@@ -16,17 +16,17 @@
 			<td>게시일</td>
 			<td>조회수</td>
 		</tr>		
-		<c:forEach items="${list }" var="dto">
+		<c:forEach items="${list}" var="dto">
 			<tr>
 				<td>${dto.bid}</td>
-				<td>${dto.btitle}</td>
+				<td><a href="content_view.do?bid=${dto.bid}">${dto.btitle}</a></td>
 				<td>${dto.bname}</td>
 				<td>${dto.bdate}</td>
 				<td>${dto.bhit}</td>
 			</tr>
 		</c:forEach>		
 		<tr>
-			<td colspan="5"><a href="write_view.jsp">게시글 작성</a></td>
+			<td colspan="5"><a href="write_view.do">게시글 작성</a></td>
 		</tr>
 	</table>
 </body>

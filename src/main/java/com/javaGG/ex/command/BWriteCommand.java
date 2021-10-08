@@ -11,7 +11,7 @@ public class BWriteCommand implements BCommand{
 		// TODO Auto-generated constructor stub
 	}	
 	@Override
-	public void excute(HttpServletRequest request, HttpServletResponse repsResponse) {
+	public void excute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		String bname = request.getParameter("bname");
 		String btitle = request.getParameter("btitle");
