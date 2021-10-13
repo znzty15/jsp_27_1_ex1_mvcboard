@@ -28,32 +28,36 @@ public class BDao {
 		}
 	}
 	
-	public void write(String bname, String btitle, String bcontent) {
+public void write(String bname, String btitle, String bcontent) {
 		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String query = "insert into mvc_board (bid, bname, btitle, bcontent, bhit, bgroup, bstep, bindent)"
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String query = "insert into mvc_board (bid, bname, btitle, bcontent, bhit, bgroup, bstep, bindent) "
 				+ "values (mvc_board_seq.nextval, ?, ?, ?, 0, mvc_board_seq.currval, 0, 0 )";
 		
 		try {
-			conn = datasource.getConnection();
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, bname);
-			pstmt.setString(2, btitle);
-			pstmt.setString(3, bcontent);
-			int rn = pstmt.executeUpdate();//내용 저장이 성공하면 1 실패 0
-		}catch (Exception e) {
-			// TODO: handle exception
+			connection = datasource.getConnection();
+			preparedStatement = connection.prepareStatement(query);
+			
+			preparedStatement.setString(1, bname);
+			preparedStatement.setString(2, btitle);
+			preparedStatement.setString(3, bcontent);
+			
+			int rn = preparedStatement.executeUpdate();//글 내용 저장이 성공하면 rn=1
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
-				if(pstmt != null) pstmt.close();
-				if(conn != null) conn.close();
+				if(preparedStatement !=null) preparedStatement.close();
+				if(connection != null) connection.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		
 	}
 	
 	public ArrayList<BDto> list() {

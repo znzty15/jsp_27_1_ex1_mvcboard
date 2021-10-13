@@ -60,20 +60,20 @@ public class BFrontController extends HttpServlet {
 		String com = ur1.substring(conPath.length());
 		
 		if(com.equals("/write_view.do")) {
-			viewPage = "write_view.jsp";//글 쓰기 페이지
+			viewPage = "write_view.jsp";
 		} else if(com.equals("/write.do")) {
 			command = new BWriteCommand();
 			command.excute(request, response);
-			viewPage = "list.do";
+			viewPage = "list.do";			
 		} else if(com.equals("/list.do")) {
 			command = new BListCommand();
 			command.excute(request, response);
-			viewPage = "list.jsp";//글 쓴거 보여주기
-		}else if(com.equals("/content_view.do")) {
-	         command = new BContentCommand();
-	         command.excute(request, response);
-	         viewPage = "content_view.jsp";//글 수정창 들어가기
-	      }
+			viewPage = "list.jsp";
+		} else if(com.equals("/content_view.do")) {
+			command = new BContentCommand();
+			command.excute(request, response);
+			viewPage = "content_view.jsp";
+		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}
