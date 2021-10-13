@@ -30,28 +30,28 @@ public class BDao {
 	
 public void write(String bname, String btitle, String bcontent) {
 		
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+		Connection conn = null;
+		PreparedStatement psmt = null;
 		String query = "insert into mvc_board (bid, bname, btitle, bcontent, bhit, bgroup, bstep, bindent) "
 				+ "values (mvc_board_seq.nextval, ?, ?, ?, 0, mvc_board_seq.currval, 0, 0 )";
 		
 		try {
-			connection = datasource.getConnection();
-			preparedStatement = connection.prepareStatement(query);
+			conn = datasource.getConnection();
+			psmt = conn.prepareStatement(query);
 			
-			preparedStatement.setString(1, bname);
-			preparedStatement.setString(2, btitle);
-			preparedStatement.setString(3, bcontent);
+			psmt.setString(1, bname);
+			psmt.setString(2, btitle);
+			psmt.setString(3, bcontent);
 			
-			int rn = preparedStatement.executeUpdate();//글 내용 저장이 성공하면 rn=1
+			int rn = psmt.executeUpdate();//글 내용 저장이 성공하면 rn=1
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
-				if(preparedStatement !=null) preparedStatement.close();
-				if(connection != null) connection.close();
+				if(psmt !=null) psmt.close();
+				if(conn != null) conn.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -66,14 +66,14 @@ public void write(String bname, String btitle, String bcontent) {
 		
 //		BDto dto = new BDto();
 		Connection conn = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		String query = "select * from mvc_board order by bgroup desc, bstep asc";//id순으로 내림차순 정렬
 		
 		try {
 			conn = datasource.getConnection();
-			pstmt = conn.prepareStatement(query);
-			rs = pstmt.executeQuery();
+			psmt = conn.prepareStatement(query);
+			rs = psmt.executeQuery();
 			
 			while(rs.next()) {
 				int bid = rs.getInt("bid");
@@ -96,7 +96,7 @@ public void write(String bname, String btitle, String bcontent) {
 		} finally {
 			try {
 				if(rs != null) rs.close();
-				if(pstmt != null) pstmt.close();
+				if(psmt != null) psmt.close();
 				if(conn != null) conn.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -110,15 +110,15 @@ public void write(String bname, String btitle, String bcontent) {
 		
 		BDto dto = null;
 		Connection conn = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		String query = "select * from mvc_board where bid = ?";
 		
 		try {
 			conn = datasource.getConnection();
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, Integer.parseInt(sid));
-			rs = pstmt.executeQuery();
+			psmt = conn.prepareStatement(query);
+			psmt.setInt(1, Integer.parseInt(sid));
+			rs = psmt.executeQuery();
 			
 			if(rs.next()) {
 				int bid = rs.getInt("bid");
@@ -139,7 +139,7 @@ public void write(String bname, String btitle, String bcontent) {
 		} finally {
 			try {
 				if(rs != null) rs.close();
-				if(pstmt != null) pstmt.close();
+				if(psmt != null) psmt.close();
 				if(conn != null) conn.close();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -148,4 +148,69 @@ public void write(String bname, String btitle, String bcontent) {
 		}
 		return dto;
 	}
+	
+	public void modify(String bid, String bname, String btitle, String bcontent) {
+	      // TODO Auto-generated method stub
+	      Connection conn = null; //conn
+	      PreparedStatement psmt = null; // psmt로 간단하게 사용하기도 함
+	      
+	      try {
+	         conn = datasource.getConnection();
+	         String Query = "update mvc_board set bname = ?, btitle = ?, bcontent=? where bid = ?";
+	         psmt = conn.prepareStatement(Query);
+	         
+	         psmt.setString(1, bname);
+	         psmt.setString(2, btitle);
+	         psmt.setString(3, bcontent);
+	         psmt.setInt(4, Integer.parseInt(bid));
+	         
+	         int rn = psmt.executeUpdate();
+	         
+	      } catch (Exception e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }finally {
+	         try {
+	        	 if(psmt !=null) psmt.close();
+	        	 if(conn != null) conn.close();
+	         } catch (SQLException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         }
+	      }
+	      
+	}
+
+	public void delete(String bid) {
+		// TODO Auto-generated method stub
+		Connection conn = null; //conn
+		PreparedStatement psmt = null; // psmt로 간단하게 사용하기도 함
+	      
+	    try {
+	       conn = datasource.getConnection();
+	       String Query = "delete from mvc_board where bid = ?";
+	       psmt = conn.prepareStatement(Query);
+	       
+	       psmt.setInt(1, Integer.parseInt(bid));
+	       
+	       int rn = psmt.executeUpdate();
+	       
+	    } catch (Exception e) {
+	       // TODO Auto-generated catch block
+	       e.printStackTrace();
+	    } finally {
+	    	try {
+	    		if(psmt !=null) psmt.close();
+	    		if(conn != null) conn.close();
+	    	} catch (SQLException e) {
+	    		// TODO Auto-generated catch block
+	            e.printStackTrace();
+	        }
+	    }
+	}
+	
 }
+
+
+
+

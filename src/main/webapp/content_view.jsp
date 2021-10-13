@@ -10,25 +10,26 @@
 	<h3>자유게시판 글보기</h3>
 	<table width="800" cellpadding="0" cellspacing="0" border="1">
 		<form action="modify.do" method="post">
+			<input type="hidden" name="bid" value="${content_view.bid}">
 			<tr>
 				<td align="center" width="10%">번 호</td>
-				<td width="20%">${content_view.bid }</td>
+				<td width="20%">${content_view.bid}</td>
 				<td align="center" width="10%">글제목</td>
-				<td><input type="text" name="btitle" size="60" value="${content_view.btitle }"></td>
+				<td><input type="text" name="btitle" size="60" value="${content_view.btitle}"></td>
 			</tr>
 			<tr>
 				<td align="center">글쓴이</td>
-				<td>${content_view.bname }</td>
+				<td><input type="text" name="bname" value="${content_view.bname}"></td>
 				<td align="center">조회수</td>
-				<td>${content_view.bhit }</td>
+				<td>${content_view.bhit}</td>
 			</tr>
 			<tr>
 				<td align="center">내 용</td>
-				<td colspan="3"><textarea cols="90" name="bcontent" rows="10">${content_view.bcontent }</textarea></td>
+				<td colspan="3"><textarea cols="90" name="bcontent" rows="10">${content_view.bcontent}</textarea></td>
 			</tr>
 			<tr>
 				<td align="center"><input type="submit" value="수정"></td>
-				<td colspan="3"><a href="list.do">글목록보기</a> &nbsp;&nbsp;&nbsp;&nbsp;삭 제&nbsp;&nbsp;&nbsp;&nbsp;답 변 </td>
+				<td colspan="3"><a href="list.do">글목록보기</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete.do?bid=${content_view.bid}">삭 제</a>&nbsp;&nbsp;&nbsp;&nbsp;답 변 </td>
 			</tr>		
 		</form>	
 	</table>

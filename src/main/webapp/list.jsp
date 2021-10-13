@@ -24,7 +24,7 @@
 				<td>${dto.bdate}</td>
 				<td>${dto.bhit}</td>
 			</tr>
-		</c:forEach>		
+		</c:forEach>
 		<tr>
 			<td colspan="5"><a href="write_view.do">게시글 작성</a></td>
 		</tr>
