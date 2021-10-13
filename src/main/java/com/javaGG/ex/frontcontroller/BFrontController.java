@@ -14,6 +14,8 @@ import com.javaGG.ex.command.BContentCommand;
 import com.javaGG.ex.command.BDeleteCommand;
 import com.javaGG.ex.command.BListCommand;
 import com.javaGG.ex.command.BModifyCommand;
+import com.javaGG.ex.command.BReplyCommand;
+import com.javaGG.ex.command.BReplyViewCommand;
 import com.javaGG.ex.command.BWriteCommand;
 
 /**
@@ -81,6 +83,14 @@ public class BFrontController extends HttpServlet {
 			viewPage = "list.do";
 		} else if(com.equals("/delete.do")) {
 			command = new BDeleteCommand();
+			command.excute(request, response);
+			viewPage = "list.do";
+		} else if(com.equals("/reply_view.do")) {
+			command = new BReplyViewCommand();
+			command.excute(request, response);
+			viewPage = "reply_view.jsp";
+		} else if(com.equals("/reply.do")) {
+			command = new BReplyCommand();
 			command.excute(request, response);
 			viewPage = "list.do";
 		}

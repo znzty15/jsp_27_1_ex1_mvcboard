@@ -50,7 +50,7 @@ public void write(String bname, String btitle, String bcontent) {
 			e.printStackTrace();
 		} finally {
 			try {
-				if(psmt !=null) psmt.close();
+				if(psmt != null) psmt.close();
 				if(conn != null) conn.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -108,6 +108,8 @@ public void write(String bname, String btitle, String bcontent) {
 	
 	public BDto contentView(String sid) {	
 		
+		makeHit(sid);
+		
 		BDto dto = null;
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -151,8 +153,8 @@ public void write(String bname, String btitle, String bcontent) {
 	
 	public void modify(String bid, String bname, String btitle, String bcontent) {
 	      // TODO Auto-generated method stub
-	      Connection conn = null; //conn
-	      PreparedStatement psmt = null; // psmt로 간단하게 사용하기도 함
+	      Connection conn = null;
+	      PreparedStatement psmt = null;
 	      
 	      try {
 	         conn = datasource.getConnection();
@@ -171,7 +173,7 @@ public void write(String bname, String btitle, String bcontent) {
 	         e.printStackTrace();
 	      }finally {
 	         try {
-	        	 if(psmt !=null) psmt.close();
+	        	 if(psmt != null) psmt.close();
 	        	 if(conn != null) conn.close();
 	         } catch (SQLException e) {
 	            // TODO Auto-generated catch block
@@ -183,8 +185,8 @@ public void write(String bname, String btitle, String bcontent) {
 
 	public void delete(String bid) {
 		// TODO Auto-generated method stub
-		Connection conn = null; //conn
-		PreparedStatement psmt = null; // psmt로 간단하게 사용하기도 함
+		Connection conn = null;
+		PreparedStatement psmt = null;
 	      
 	    try {
 	       conn = datasource.getConnection();
@@ -200,7 +202,7 @@ public void write(String bname, String btitle, String bcontent) {
 	       e.printStackTrace();
 	    } finally {
 	    	try {
-	    		if(psmt !=null) psmt.close();
+	    		if(psmt != null) psmt.close();
 	    		if(conn != null) conn.close();
 	    	} catch (SQLException e) {
 	    		// TODO Auto-generated catch block
@@ -209,8 +211,140 @@ public void write(String bname, String btitle, String bcontent) {
 	    }
 	}
 	
+	public BDto reply_view(String rid) {	
+		
+		BDto dto = null;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		String query = "select * from mvc_board where bid = ?";
+		
+		try {
+			conn = datasource.getConnection();
+			psmt = conn.prepareStatement(query);
+			psmt.setInt(1, Integer.parseInt(rid));
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				int bid = rs.getInt("bid");
+				String bname = rs.getString("bname");
+				String btitle = rs.getString("btitle");
+				String bcontent = rs.getString("bcontent");
+				Timestamp bdate = rs.getTimestamp("bdate");
+				int bhit = rs.getInt("bhit");
+				int bgroup = rs.getInt("bgroup");
+				int bstep = rs.getInt("bstep");
+				int bindent = rs.getInt("bindent");
+				
+				dto = new BDto(bid, bname, btitle, bcontent, bdate, bhit, bgroup, bstep, bindent);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(psmt != null) psmt.close();
+				if(conn != null) conn.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return dto;
+	}
+
+	public void reply(String bid, String bname, String btitle, String bcontent, String bgroup, String bstep, String bindent) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		String query = "insert into mvc_board (bid, bname, btitle, bcontent, bgroup, bstep, bindent)"
+				+ "values (mvc_board_seq.nextval, ?, ?, ?, ?, ?, ?)";
+		
+		try {
+			conn = datasource.getConnection();
+			psmt = conn.prepareStatement(query);
+			
+			psmt.setString(1, bname);
+			psmt.setString(2, btitle);
+			psmt.setString(3, bcontent);
+			psmt.setInt(4, Integer.parseInt(bgroup));
+			psmt.setInt(5, Integer.parseInt(bstep)+1);
+			psmt.setInt(6, Integer.parseInt(bindent)+1);
+			
+			int rn = psmt.executeUpdate();//글 내용 저장이 성공하면 rn=1
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(psmt != null) psmt.close();
+				if(conn != null) conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	private void replyShape(String strGroup, String strStep) { // 새로운 댓글이 생성될 때 마다 해당 IDdml step값을 1씩 증가
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		try {
+			conn = datasource.getConnection();
+			String query = "update mvc_board set bstep = bstep + 1 where bgroup = ? and bstep > ? ";
+			
+			psmt = conn.prepareStatement(query);
+			psmt.setInt(1, Integer.parseInt(strGroup));
+			psmt.setInt(2, Integer.parseInt(strStep));
+			
+			int rn = psmt.executeUpdate();//글 내용 저장이 성공하면 rn=1
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(psmt != null) psmt.close();
+				if(conn != null) conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void makeHit(String bid) {
+	      // TODO Auto-generated method stub
+	      Connection conn = null;
+	      PreparedStatement psmt = null;
+	      
+	      try {
+	         conn = datasource.getConnection();
+	         String Query = "update mvc_board set bhit = bhit + 1 where bid = ?";
+	         psmt = conn.prepareStatement(Query);
+	         
+	         psmt.setInt(1, Integer.parseInt(bid));
+	         
+	         int rn = psmt.executeUpdate();
+	         
+	      } catch (Exception e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }finally {
+	         try {
+	        	 if(psmt != null) psmt.close();
+	        	 if(conn != null) conn.close();
+	         } catch (SQLException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         }
+	      }
+	      
+	}
+	
 }
-
-
-
 

@@ -13,7 +13,7 @@
 			<input type="hidden" name="bid" value="${content_view.bid}">
 			<tr>
 				<td align="center" width="10%">번 호</td>
-				<td width="20%">${content_view.bid}</td>
+				<td width="40%">${content_view.bid}</td>
 				<td align="center" width="10%">글제목</td>
 				<td><input type="text" name="btitle" size="60" value="${content_view.btitle}"></td>
 			</tr>
@@ -29,7 +29,7 @@
 			</tr>
 			<tr>
 				<td align="center"><input type="submit" value="수정"></td>
-				<td colspan="3"><a href="list.do">글목록보기</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete.do?bid=${content_view.bid}">삭 제</a>&nbsp;&nbsp;&nbsp;&nbsp;답 변 </td>
+				<td colspan="3"><a href="list.do">글목록보기</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete.do?bid=${content_view.bid}">삭 제</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="reply_view.do?bid=${content_view.bid}">답 변</a></td>
 			</tr>		
 		</form>	
 	</table>
